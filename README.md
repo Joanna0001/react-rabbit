@@ -1,73 +1,139 @@
-# React + TypeScript + Vite
+# React Rabbit
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+基于 React 19 + TypeScript + Vite + Ant Design 的现代化前端项目模板
 
-Currently, two official plugins are available:
+## ✨ 特性
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ⚡️ **React 19** - 最新版本的 React
+- 🔷 **TypeScript** - 类型安全的 JavaScript
+- ⚡️ **Vite** - 极速的开发体验
+- 🎨 **Ant Design** - 企业级 UI 设计语言
+- 🚦 **React Router v7** - 声明式路由管理
+- 🐻 **Zustand** - 轻量级状态管理
+- 🔄 **React Query** - 强大的服务端状态管理
+- 📡 **Axios** - HTTP 请求封装
+- 💅 **Prettier** - 代码格式化
+- 🔍 **ESLint** - 代码质量检查
+- 🐶 **Husky** - Git hooks
+- 🎯 **Lint-staged** - 提交前代码检查
 
-## React Compiler
+## 📦 目录结构
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── api/              # API 接口
+├── assets/           # 静态资源
+├── components/       # 公共组件
+│   ├── common/       # 通用 UI 组件
+│   └── business/     # 业务组件
+├── config/           # 配置文件
+├── constants/        # 常量定义
+├── hooks/            # 自定义 Hooks
+├── layouts/          # 布局组件
+├── pages/            # 页面组件
+├── router/           # 路由配置
+├── store/            # 状态管理
+├── styles/           # 全局样式
+├── types/            # TypeScript 类型定义
+└── utils/            # 工具函数
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 快速开始
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 安装依赖
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+### 开发环境运行
+
+```bash
+npm run dev
+```
+
+### 生产环境构建
+
+```bash
+npm run build
+```
+
+### 预览构建结果
+
+```bash
+npm run preview
+```
+
+### 代码检查
+
+```bash
+npm run lint
+```
+
+### 自动修复代码问题
+
+```bash
+npm run lint:fix
+```
+
+### 代码格式化
+
+```bash
+npm run format
+```
+
+## 📝 使用说明
+
+### 路径别名
+
+项目已配置 `@` 作为 `src` 目录的别名：
+
+```typescript
+import { xxx } from '@/utils/xxx';
+import Component from '@/components/xxx';
+```
+
+### 环境变量
+
+- `.env.development` - 开发环境配置
+- `.env.production` - 生产环境配置
+
+### API 请求
+
+使用封装好的 axios 实例：
+
+```typescript
+import request from '@/config/axios';
+
+// GET 请求
+request.get('/api/users');
+
+// POST 请求
+request.post('/api/login', { username, password });
+```
+
+### 状态管理
+
+使用 Zustand：
+
+```typescript
+import { useUserStore } from '@/store/userStore';
+
+const { userInfo, setUserInfo } = useUserStore();
+```
+
+### 路由配置
+
+在 `src/router/index.tsx` 中配置路由
+
+## 🔧 配置说明
+
+- `vite.config.ts` - Vite 配置
+- `tsconfig.json` - TypeScript 配置
+- `.eslintrc` - ESLint 配置
+- `.prettierrc` - Prettier 配置
+- `.lintstagedrc.json` - Lint-staged 配置
+
+## 📄 License
+
+MIT
