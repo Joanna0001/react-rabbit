@@ -14,3 +14,8 @@
 .navLink:hover {
   color: var(--primary-color) !important;
 }
+
+.navLink i {
+  font-size: 14px;
+  margin-right: 2px;
+}

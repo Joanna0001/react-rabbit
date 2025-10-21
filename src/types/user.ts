@@ -4,7 +4,7 @@ export interface LoginForm {
   agree?: boolean;
 }
 
-export interface UserInfo {
+export type UserInfo = {
   id: string;
   account: string;
   avatar: string;
@@ -15,5 +15,8 @@ export interface UserInfo {
   cityCode: string;
   provinceCode: string;
   profession: string;
-  token?: string;
-}
+};
+
+export type LoginResponse = {
+  token: string;
+} & UserInfo;

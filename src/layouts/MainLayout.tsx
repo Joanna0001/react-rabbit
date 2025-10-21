@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Layout, theme } from 'antd';
 import { NavHeader } from './components/NavHeader';
-import { FooterInfo } from './components/FooterInfo';
+import { FooterInfo } from './components/Footer';
 
 const { Header, Content, Footer } = Layout;
 

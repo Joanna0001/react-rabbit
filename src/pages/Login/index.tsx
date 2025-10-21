@@ -7,7 +7,7 @@ import style from './index.module.css';
 import type { LoginForm } from '@/types/user';
 import { login } from '@/api/user';
 import { useUserStore } from '@/store/userStore';
-import { FooterInfo } from '@/layouts/components/FooterInfo';
+import { FooterInfo } from '@/layouts/components/Footer';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -24,7 +24,6 @@ export default function Login() {
     }).finally(() => setLoading(false));
 
     const { token, ...other } = res;
-    if (!token) return;
     // 保存token
     setToken(token);
     // 保存用户信息
