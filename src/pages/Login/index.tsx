@@ -35,10 +35,14 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <Flex justify="space-between" align="flex-end" style={{ margin: '0 1.2%', background: '#fff' }}>
+    <div style={{ background: '#fff', height: '100%' }}>
+      <Flex
+        justify="space-between"
+        align="flex-end"
+        style={{ margin: '0 auto', background: '#fff', maxWidth: 'var(--max-width)' }}
+      >
         <div className={style.logo} style={{ background: `url(${logo}) no-repeat center 18px / contain` }}></div>
-        <div className={style.desc}>
+        <div className={style.desc} onClick={() => navigate('/')}>
           <span>进入网站首页</span>
           <i className={`iconfont icon-angle-right ${style.arrowIcon}`}></i>
           <i className={`iconfont icon-angle-right ${style.arrowIcon}`}></i>
@@ -48,7 +52,6 @@ export default function Login() {
       <div className={style.bg} style={{ background: `url(${bg}) no-repeat center / cover` }}>
         <div className={style.formContainer}>
           <div className={style.formHeader}>账户登录</div>
-
           <Form
             className={style.form}
             initialValues={{ account: 'heima282', password: 'hm#qd@23!', agree: true }}

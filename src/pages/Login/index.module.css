@@ -23,6 +23,7 @@
 .bg {
   position: relative;
   height: 488px;
+  margin-bottom: 10px;
 }
 
 .formContainer {

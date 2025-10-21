@@ -1,8 +1,8 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '@/layouts/MainLayout';
-import Home from '@/pages/Home';
 import About from '@/pages/About';
 import Login from '@/pages/Login';
+import Home from '@/pages/Home';
 
 const router = createBrowserRouter([
   {
@@ -11,10 +11,6 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/home" replace />,
-      },
-      {
-        path: 'home',
         element: <Home />,
       },
       {
@@ -26,10 +22,6 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
-  },
-  {
-    path: '*',
-    element: <Navigate to="/home" replace />,
   },
 ]);
 

@@ -2,6 +2,7 @@ import { Divider, Space, Flex, Image, Button } from 'antd';
 import { useUserStore } from '@/store/userStore';
 import styles from './Footer.module.css';
 import app from '@/assets/images/qrcode.jpg';
+
 export function FooterInfo() {
   const { isLogin } = useUserStore();
 
