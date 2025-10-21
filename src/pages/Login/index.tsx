@@ -37,7 +37,7 @@ export default function Login() {
 
   return (
     <div>
-      <Flex justify="space-between" align="flex-end" style={{ margin: '0 1.2%' }}>
+      <Flex justify="space-between" align="flex-end" style={{ margin: '0 1.2%', background: '#fff' }}>
         <div className={style.logo} style={{ background: `url(${logo}) no-repeat center 18px / contain` }}></div>
         <div className={style.desc}>
           <span>进入网站首页</span>

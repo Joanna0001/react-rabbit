@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Layout, theme } from 'antd';
 import { NavHeader } from './components/NavHeader';
+import { FooterInfo } from './components/FooterInfo';
 
 const { Header, Content, Footer } = Layout;
 
@@ -14,6 +15,7 @@ export default function MainLayout() {
       <Header style={{ height: '53px', backgroundColor: '#333' }}>
         <NavHeader />
       </Header>
+
       <Content style={{ padding: '24px 50px' }}>
         <div
           style={{
@@ -26,7 +28,10 @@ export default function MainLayout() {
           <Outlet />
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>React Rabbit ©{new Date().getFullYear()} Created with ❤️</Footer>
+
+      <Footer style={{ textAlign: 'center', padding: 0 }}>
+        <FooterInfo />
+      </Footer>
     </Layout>
   );
 }
