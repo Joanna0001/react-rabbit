@@ -1,28 +1,20 @@
 import { Space, Divider, Typography } from 'antd';
-import { MAX_WIDTH } from '@/constants';
-import './NavHeader.css';
-
-const containerStyle = {
-  display: 'flex',
-  justifyContent: 'flex-end',
-  maxWidth: MAX_WIDTH,
-  margin: '0 auto',
-} as const;
+import styles from './NavHeader.module.css';
 
 export function NavHeader() {
   return (
-    <div style={containerStyle}>
+    <div className={styles.container}>
       <Space
         split={<Divider type="vertical" style={{ backgroundColor: '#666', width: '2px' }} />}
         style={{ height: '53px' }}
       >
-        <Typography.Link className="nav-link" href="/home">
+        <Typography.Link className={styles.navLink} href="/login">
           请先登录
         </Typography.Link>
-        <Typography.Link className="nav-link" href="/about">
+        <Typography.Link className={styles.navLink} href="/about">
           帮助中心
         </Typography.Link>
-        <Typography.Link className="nav-link" href="/contact">
+        <Typography.Link className={styles.navLink} href="/contact">
           关于我们
         </Typography.Link>
       </Space>

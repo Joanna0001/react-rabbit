@@ -1,28 +1,12 @@
-import request from '@/config/axios';
-
-interface LoginParams {
-  username: string;
-  password: string;
-}
-
-interface UserInfo {
-  id: string;
-  name: string;
-  email: string;
-  avatar?: string;
-}
+import apiClient from '@/config/axios';
+import type { LoginForm, UserInfo } from '@/types/user';
 
 // 用户登录
-export const login = (data: LoginParams) => {
-  return request.post('/user/login', data);
-};
-
-// 获取用户信息
-export const getUserInfo = () => {
-  return request.get<UserInfo>('/user/info');
+export const login = (data: LoginForm) => {
+  return apiClient.post<UserInfo>('/login', data);
 };
 
 // 退出登录
 export const logout = () => {
-  return request.post('/user/logout');
+  return apiClient.post('/user/logout');
 };

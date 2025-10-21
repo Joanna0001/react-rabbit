@@ -1,10 +1,9 @@
-import React from 'react';
 import { Typography, Card, Row, Col, Statistic } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
 const { Title, Paragraph } = Typography;
 
-const Home: React.FC = () => {
+export default function Home() {
   return (
     <div>
       <Title level={2}>欢迎使用 React Rabbit</Title>
@@ -58,6 +57,4 @@ const Home: React.FC = () => {
       </Card>
     </div>
   );
-};
-
-export default Home;
+}

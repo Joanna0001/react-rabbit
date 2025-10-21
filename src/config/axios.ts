@@ -1,8 +1,13 @@
 import axios from 'axios';
-import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosRequestConfig } from 'axios';
 
-// 创建 axios 实例
-const request: AxiosInstance = axios.create({
+export interface ApiResponse<T = unknown> {
+  code: string;
+  msg: string;
+  result: T;
+}
+
+const axiosInstance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
   timeout: 10000,
   headers: {
@@ -10,10 +15,8 @@ const request: AxiosInstance = axios.create({
   },
 });
 
-// 请求拦截器
-request.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // 从 localStorage 获取 token
     const token = localStorage.getItem('token');
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -25,42 +28,45 @@ request.interceptors.request.use(
   },
 );
 
-// 响应拦截器
-request.interceptors.response.use(
-  (response: AxiosResponse) => {
+axiosInstance.interceptors.response.use(
+  <T>(response: AxiosResponse<ApiResponse<T>>) => {
     const { data } = response;
-    // 根据后端接口规范调整
-    if (data.code === 0 || data.code === 200) {
-      return data;
+    if (data.code === '1') {
+      return data.result;
     }
-    // 处理业务错误
-    return Promise.reject(new Error(data.message || '请求失败'));
+    return Promise.reject(new Error(data.msg || '请求失败'));
   },
   error => {
-    // 处理 HTTP 错误
     if (error.response) {
       const { status } = error.response;
       switch (status) {
         case 401:
-          // 未授权，跳转登录
           localStorage.removeItem('token');
           window.location.href = '/login';
           break;
-        case 403:
-          console.error('没有权限访问');
-          break;
-        case 404:
-          console.error('请求的资源不存在');
-          break;
-        case 500:
-          console.error('服务器错误');
-          break;
-        default:
-          console.error('请求失败');
+        // ... other error handling
       }
     }
     return Promise.reject(error);
   },
 );
 
-export default request;
+class APIClient {
+  get<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<T> {
+    return this.request<T>({ url, ...config, method: 'GET' });
+  }
+  post<T = unknown>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
+    return this.request<T>({ url, data, ...config, method: 'POST' });
+  }
+  put<T = unknown>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T> {
+    return this.request<T>({ url, data, ...config, method: 'PUT' });
+  }
+  delete<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<T> {
+    return this.request<T>({ url, ...config, method: 'DELETE' });
+  }
+  request<T = unknown>(config: AxiosRequestConfig): Promise<T> {
+    return axiosInstance.request<unknown, T>(config);
+  }
+}
+
+export default new APIClient();

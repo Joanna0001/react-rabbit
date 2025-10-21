@@ -1,4 +1,3 @@
-import React from 'react';
 import { Spin } from 'antd';
 
 interface LoadingProps {
@@ -6,7 +5,7 @@ interface LoadingProps {
   size?: 'small' | 'default' | 'large';
 }
 
-const Loading: React.FC<LoadingProps> = ({ tip = '加载中...', size = 'large' }) => {
+export default function Loading({ tip = '加载中...', size = 'large' }: LoadingProps) {
   return (
     <div
       style={{
@@ -19,6 +18,4 @@ const Loading: React.FC<LoadingProps> = ({ tip = '加载中...', size = 'large' 
       <Spin size={size} tip={tip} />
     </div>
   );
-};
-
-export default Loading;
+}

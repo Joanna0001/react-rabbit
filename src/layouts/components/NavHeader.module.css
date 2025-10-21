@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: flex-end;
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+}
+
+.navLink {
+  color: #cdcdcd !important;
+}
+
+.navLink:hover {
+  color: var(--primary-color) !important;
+}

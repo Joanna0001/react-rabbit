@@ -1,11 +1,10 @@
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Layout, theme } from 'antd';
 import { NavHeader } from './components/NavHeader';
 
 const { Header, Content, Footer } = Layout;
 
-const MainLayout: React.FC = () => {
+export default function MainLayout() {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -27,11 +26,7 @@ const MainLayout: React.FC = () => {
           <Outlet />
         </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>
-        React Rabbit ©{new Date().getFullYear()} Created with ❤️
-      </Footer>
+      <Footer style={{ textAlign: 'center' }}>React Rabbit ©{new Date().getFullYear()} Created with ❤️</Footer>
     </Layout>
   );
-};
-
-export default MainLayout;
+}
