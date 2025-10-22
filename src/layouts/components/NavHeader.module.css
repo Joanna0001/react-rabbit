@@ -74,4 +74,5 @@
 .fixedHeaderVisible {
   z-index: 999;
   transform: translateY(0);
+  border-bottom: 1px solid #e4e4e4;
 }

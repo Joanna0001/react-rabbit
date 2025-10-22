@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { Layout, theme } from 'antd';
+import { Layout } from 'antd';
 import { NavHeader, MenuHeader, FixedHeader } from './components/NavHeader';
 import { FooterInfo, FooterSlogan } from './components/Footer';
 import { useState, useEffect } from 'react';
@@ -14,10 +14,6 @@ const headerStyle = {
 };
 
 export default function MainLayout() {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
   const [isFixed, setIsFixed] = useState(false);
 
   useEffect(() => {
@@ -40,17 +36,8 @@ export default function MainLayout() {
         <FixedHeader isVisible={isFixed} />
       </Header>
 
-      <Content style={{ padding: '24px 50px' }}>
-        <div
-          style={{
-            background: colorBgContainer,
-            minHeight: 280,
-            padding: 24,
-            borderRadius: borderRadiusLG,
-          }}
-        >
-          <Outlet />
-        </div>
+      <Content>
+        <Outlet />
       </Content>
 
       <Footer style={{ textAlign: 'center', padding: 0 }}>
