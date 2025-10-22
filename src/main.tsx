@@ -5,7 +5,7 @@ import { ConfigProvider } from 'antd';
 import { QueryClientProvider } from '@tanstack/react-query';
 import zhCN from 'antd/locale/zh_CN';
 import '@ant-design/v5-patch-for-react-19';
-import './index.css';
+import './styles/global.css';
 import router from './router';
 import { queryClient } from './config/reactQuery';
 
@@ -20,6 +20,8 @@ createRoot(document.getElementById('root')!).render(
             colorSuccess: '#1dc779',
             colorWarning: '#ffb302',
             colorError: '#cf4444',
+            fontFamily:
+              "'Microsoft Yahei', 'PingFang SC', 'Avenir', 'Segoe UI', 'Hiragino Sans GB', 'STHeiti', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif",
           },
         }}
       >
