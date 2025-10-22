@@ -15,3 +15,7 @@ export type categoryResponse = {
   goods: Goods[];
   children?: categoryResponse[] | [];
 };
+
+export type GoodsResponse = {
+  saleInfo: string;
+} & categoryResponse;

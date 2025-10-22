@@ -7,7 +7,7 @@ export function HotPanel() {
   const { data: hotGoodsList } = useHotGoodsQuery();
 
   return (
-    <div className="bg-white" style={{ padding: '0 calc(50% - var(--max-width)/2)' }}>
+    <div className="bg-white" style={{ padding: '0 calc(50% - var(--max-width)/2) 20px' }}>
       <div className="text-[32px]" style={{ padding: '40px 0' }}>
         人气推荐<span className="ml-5 text-base text-[#999]">人气爆款 不容错过</span>
       </div>
@@ -15,6 +15,7 @@ export function HotPanel() {
       <Flex justify="space-between">
         {hotGoodsList?.map(item => (
           <Card
+            key={item.id}
             hoverable
             variant="borderless"
             cover={<Image width={300} height={300} src={item.picture} preview={false} />}
@@ -43,6 +44,7 @@ export function HomePanel() {
       <Flex justify="space-between">
         {newGoodsList?.map(item => (
           <Card
+            key={item.id}
             styles={{ body: { backgroundColor: '#f0f9f4' } }}
             hoverable
             cover={<Image width={300} height={300} src={item.picture} preview={false} />}

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getBanner, getNewGoods, getHotGoods } from '@/api/home';
+import { getBanner, getNewGoods, getHotGoods, getGoodsList } from '@/api/home';
 
 export const useBannerQuery = () => {
   return useQuery({
@@ -22,5 +22,12 @@ export const useHotGoodsQuery = () => {
   return useQuery({
     queryKey: ['hotGoods'],
     queryFn: getHotGoods,
+  });
+};
+
+export const useGoodsListQuery = () => {
+  return useQuery({
+    queryKey: ['goodsList'],
+    queryFn: getGoodsList,
   });
 };
