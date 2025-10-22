@@ -6,3 +6,14 @@ export type Goods = {
   picture: string;
   price: string;
 };
+
+export type NewGoods = {
+  discount?: string;
+} & Goods;
+
+export type HotGoods = {
+  id: string;
+  picture: string;
+  title: string;
+  alt: string;
+};

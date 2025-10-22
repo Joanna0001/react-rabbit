@@ -44,8 +44,10 @@ export function Banner() {
             onMouseLeave={() => setShowCategoryMask(false)}
           >
             <span>{item.name}</span>
-            <span>{item?.children?.length ? item?.children?.[0]?.name : null}</span>
-            <span>{item?.children?.length && item?.children?.length > 1 ? item?.children?.[1]?.name : null}</span>
+            <span className="text-[14px]">{item?.children?.length ? item?.children?.[0]?.name : null}</span>
+            <span className="text-[14px]">
+              {item?.children?.length && item?.children?.length > 1 ? item?.children?.[1]?.name : null}
+            </span>
           </Space>
         ))}
       </Flex>
