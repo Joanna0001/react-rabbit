@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Layout, theme } from 'antd';
 import { NavHeader } from './components/NavHeader';
-import { FooterInfo } from './components/Footer';
+import { FooterInfo, FooterSlogan } from './components/Footer';
 
 const { Header, Content, Footer } = Layout;
 
@@ -30,6 +30,7 @@ export default function MainLayout() {
       </Content>
 
       <Footer style={{ textAlign: 'center', padding: 0 }}>
+        <FooterSlogan />
         <FooterInfo />
       </Footer>
     </Layout>
