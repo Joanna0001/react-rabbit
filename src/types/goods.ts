@@ -1,4 +1,4 @@
-export type goods = {
+export type Goods = {
   desc: string;
   id: string;
   name: string;

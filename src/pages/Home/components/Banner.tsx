@@ -1,19 +1,21 @@
 import { useBannerQuery } from '@/hooks/useHome';
-import { Carousel, Image, Flex, Space, Card } from 'antd';
+import { Carousel, Image, Flex, Space, Card, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useCategoryQuery } from '@/hooks/useCategory';
 import styles from './Banner.module.css';
 import { useState } from 'react';
-import type { categoryResponse } from '@/types/category';
+import type { Goods } from '@/types/goods';
 
 export function Banner() {
   const { data: bannerList } = useBannerQuery();
   const { data: categoryList } = useCategoryQuery();
   const navigate = useNavigate();
   const [showCategoryMask, setShowCategoryMask] = useState(false);
+  const [categoryCards, setCategoryCards] = useState<Goods[]>();
 
-  const handleShowCategoryMask = (item: categoryResponse) => {
+  const handleShowCategoryMask = (item: Goods[]) => {
     console.log('item', item);
+    setCategoryCards(item);
     setShowCategoryMask(true);
   };
 
@@ -38,7 +40,7 @@ export function Banner() {
             key={item.id}
             className={styles.categoryRow}
             size={12}
-            onMouseEnter={() => handleShowCategoryMask(item)}
+            onMouseEnter={() => handleShowCategoryMask(item?.goods)}
             onMouseLeave={() => setShowCategoryMask(false)}
           >
             <span>{item.name}</span>
@@ -48,14 +50,41 @@ export function Banner() {
         ))}
       </Flex>
 
-      <div className={`${styles.categoryMask} ${showCategoryMask ? styles.show : ''}`}>
+      <div
+        className={`${styles.categoryMask} ${showCategoryMask ? styles.show : ''}`}
+        onMouseEnter={() => setShowCategoryMask(true)}
+        onMouseLeave={() => setShowCategoryMask(false)}
+      >
         <div>
           分类推荐<span>根据您的购买或浏览记录推荐</span>
         </div>
 
-        <Card>
-          <Card.Grid></Card.Grid>
-        </Card>
+        <Row gutter={[20, 20]}>
+          {categoryCards?.map(item => (
+            <Col span={8} key={item.id}>
+              <Card
+                key={item.id}
+                styles={{ body: { padding: 12, display: 'flex', alignItems: 'center', gap: 12 } }}
+                onClick={() => navigate(`/detail/${item.id}`)}
+              >
+                <div>
+                  <Image width={100} height={100} src={item.picture} preview={false} />
+                </div>
+                <div className={styles.categoryCardContent}>
+                  <div>{item.desc}</div>
+                  <div>{item.name}</div>
+                  <div>￥{item.price}</div>
+                </div>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        {/* <Card>
+          {categoryCards?.map(item => (
+
+          ))}
+        </Card> */}
       </div>
     </div>
   );
