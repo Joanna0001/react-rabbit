@@ -3,6 +3,7 @@ import MainLayout from '@/layouts/MainLayout';
 import About from '@/pages/About';
 import Login from '@/pages/Login';
 import Home from '@/pages/Home';
+import { Category } from '@/pages/Category';
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: 'category/:id',
+        element: <Category />,
       },
       {
         path: 'about',

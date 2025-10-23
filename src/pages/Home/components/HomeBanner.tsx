@@ -1,38 +1,25 @@
-import { useBannerQuery } from '@/hooks/useHome';
-import { Carousel, Image, Flex, Space, Card, Row, Col } from 'antd';
+import { Image, Flex, Space, Card, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useCategoryQuery } from '@/hooks/useCategory';
 import styles from './Banner.module.css';
 import { useState } from 'react';
 import type { Goods } from '@/types/goods';
+import { Banner } from '@/components/Banner';
 
-export function Banner() {
-  const { data: bannerList } = useBannerQuery();
+export function HomeBanner() {
   const { data: categoryList } = useCategoryQuery();
   const navigate = useNavigate();
   const [showCategoryMask, setShowCategoryMask] = useState(false);
   const [categoryCards, setCategoryCards] = useState<Goods[]>();
 
   const handleShowCategoryMask = (item: Goods[]) => {
-    console.log('item', item);
     setCategoryCards(item);
     setShowCategoryMask(true);
   };
 
   return (
     <div className={styles.bannerWrapper}>
-      <Carousel autoplay>
-        {bannerList?.map(banner => (
-          <Image
-            width={1240}
-            height={500}
-            key={banner.id}
-            src={banner.imgUrl}
-            preview={false}
-            onClick={() => navigate(banner.hrefUrl)}
-          />
-        ))}
-      </Carousel>
+      <Banner distributionSite={1} />
 
       <Flex vertical className={styles.category}>
         {categoryList?.map(item => (

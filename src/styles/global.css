@@ -5,6 +5,7 @@
 :root {
   --max-width: 1240px;
   --padding-x: calc(50% - var(--max-width) / 2);
+  --shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   --primary-color: #27ba9b;
   --help-color: #e26237;
   --suc-color: #1dc779;

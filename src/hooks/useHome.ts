@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { getBanner, getNewGoods, getHotGoods, getGoodsList } from '@/api/home';
 
-export const useBannerQuery = () => {
+export const useBannerQuery = (distributionSite: number) => {
   return useQuery({
     queryKey: ['banner'],
-    queryFn: getBanner,
+    queryFn: () => getBanner(distributionSite),
   });
 };
 

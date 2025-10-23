@@ -16,6 +16,7 @@
   top: 0;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.8);
+  z-index: 999;
 }
 
 .categoryRow {

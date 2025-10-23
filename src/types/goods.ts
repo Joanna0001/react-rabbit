@@ -17,3 +17,14 @@ export type HotGoods = {
   title: string;
   alt: string;
 };
+
+export type BrandProps = {
+  id: string;
+  name: string;
+  nameEn: string;
+  logo: string;
+  picture: string;
+  type: number;
+  desc: string;
+  place: string;
+};

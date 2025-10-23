@@ -4,7 +4,8 @@ import type { NewGoods, HotGoods } from '@/types/goods';
 import type { GoodsResponse } from '@/types/category';
 
 // 获取banner
-export const getBanner = () => apiClient.get<Banner[]>('/home/banner');
+export const getBanner = (distributionSite: number) =>
+  apiClient.get<Banner[]>(`/home/banner?distributionSite=${distributionSite}`);
 
 // 获取新鲜好物
 export const getNewGoods = () => apiClient.get<NewGoods[]>('/home/new');
