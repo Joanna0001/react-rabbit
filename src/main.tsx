@@ -5,7 +5,7 @@ import { ConfigProvider } from 'antd';
 import { QueryClientProvider } from '@tanstack/react-query';
 import zhCN from 'antd/locale/zh_CN';
 import '@ant-design/v5-patch-for-react-19';
-import './styles/global.css';
+import './index.css';
 import router from './router';
 import { queryClient } from './config/reactQuery';
 

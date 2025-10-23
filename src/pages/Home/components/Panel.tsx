@@ -8,7 +8,7 @@ export function HotPanel() {
 
   return (
     <div className="bg-white" style={{ padding: '0 calc(50% - var(--max-width)/2) 20px' }}>
-      <div className="text-[32px]" style={{ padding: '40px 0' }}>
+      <div className="text-[32px] ml-[12px]" style={{ padding: '40px 0' }}>
         人气推荐<span className="ml-5 text-base text-[#999]">人气爆款 不容错过</span>
       </div>
 
