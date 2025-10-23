@@ -1,5 +1,6 @@
-import { Image, Card, Flex } from 'antd';
+import { Card, Flex } from 'antd';
 import { useHotGoodsQuery, useNewGoodsQuery } from '@/hooks/useHome';
+import { LazyImage } from '@/components/LazyImage';
 
 const { Meta } = Card;
 
@@ -18,7 +19,7 @@ export function HotPanel() {
             key={item.id}
             hoverable
             variant="borderless"
-            cover={<Image width={300} height={300} src={item.picture} preview={false} />}
+            cover={<LazyImage width={300} height={300} src={item.picture} preview={false} />}
             style={{ boxShadow: 'none' }}
           >
             <Meta
@@ -47,7 +48,7 @@ export function HomePanel() {
             key={item.id}
             styles={{ body: { backgroundColor: '#f0f9f4' } }}
             hoverable
-            cover={<Image width={300} height={300} src={item.picture} preview={false} />}
+            cover={<LazyImage width={300} height={300} src={item.picture} preview={false} />}
           >
             <Meta
               title={<div className="text-[22px] text-center ellipsis w-[246px]">{item.name}</div>}

@@ -57,7 +57,7 @@ export function FooterSlogan() {
           </div>
           <Divider type="vertical" className={styles.contractDivider} />
           <div className={styles.contractItem}>
-            <div>客户服务</div>
+            <div>下载APP</div>
             <Flex>
               <div className={styles.contractCard}>
                 <Image width={77} height={77} src={app} alt="下载APP" preview={false} />

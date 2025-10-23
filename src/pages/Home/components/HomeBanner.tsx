@@ -1,10 +1,11 @@
-import { Image, Flex, Space, Card, Row, Col } from 'antd';
+import { Flex, Space, Card, Row, Col } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useCategoryQuery } from '@/hooks/useCategory';
 import styles from './Banner.module.css';
 import { useState } from 'react';
 import type { Goods } from '@/types/goods';
 import { Banner } from '@/components/Banner';
+import { LazyImage } from '@/components/LazyImage';
 
 export function HomeBanner() {
   const { data: categoryList } = useCategoryQuery();
@@ -57,7 +58,7 @@ export function HomeBanner() {
                 onClick={() => navigate(`/detail/${item.id}`)}
               >
                 <div>
-                  <Image width={100} height={100} src={item.picture} preview={false} />
+                  <LazyImage width={100} height={100} src={item.picture} preview={false} />
                 </div>
                 <div className={styles.categoryCardContent}>
                   <div>{item.desc}</div>

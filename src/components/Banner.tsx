@@ -1,7 +1,8 @@
 import { useBannerQuery } from '@/hooks/useHome';
-import { Carousel, Image } from 'antd';
+import { Carousel } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { LazyImage } from './LazyImage';
 
 // 广告区域展示位置（投放位置 投放位置，1为首页，2为分类商品页） 默认是1
 export function Banner({ distributionSite = 1 }: { distributionSite?: number }) {
@@ -13,7 +14,7 @@ export function Banner({ distributionSite = 1 }: { distributionSite?: number }) 
     <div onMouseEnter={() => setHasArrow(true)} onMouseLeave={() => setHasArrow(false)}>
       <Carousel autoplay arrows={hasArrow}>
         {bannerList?.map(banner => (
-          <Image
+          <LazyImage
             width={1240}
             height={500}
             key={banner.id}

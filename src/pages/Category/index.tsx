@@ -1,9 +1,10 @@
 import { Banner } from '@/components/Banner';
-import { Breadcrumb, Flex, Image } from 'antd';
+import { Breadcrumb, Flex } from 'antd';
 import { useCategoryByIdQuery } from '@/hooks/useCategory';
 import { useBreadcrumbStore } from '@/store/useBreadcrumb';
 import { useParams } from 'react-router-dom';
 import { ProductCard } from '@/components/ProductCard';
+import { LazyImage } from '@/components/LazyImage';
 
 export function Category() {
   const { breadcrumb } = useBreadcrumbStore();
@@ -21,7 +22,7 @@ export function Category() {
         <Flex wrap style={{ padding: '0 32px' }} justify="space-around">
           {categoryData?.children.map(item => (
             <div key={item.id} className="px-8 cursor-pointer hover:text-(--primary-color)">
-              <Image src={item.picture} width={100} height={100} alt={item.name} preview={false} />
+              <LazyImage src={item.picture} width={100} height={100} alt={item.name} preview={false} />
               <div className="text-center text-base color-[#333] leading-8">{item.name}</div>
             </div>
           ))}
