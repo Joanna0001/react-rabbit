@@ -1,8 +1,9 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Layout } from 'antd';
 import { NavHeader, MenuHeader, FixedHeader } from './components/NavHeader';
 import { FooterInfo, FooterSlogan } from './components/Footer';
 import { useState, useEffect } from 'react';
+import { CustomBreadcrumb } from '@/components/CustomBreadcrumb';
 
 const { Header, Content, Footer } = Layout;
 
@@ -15,6 +16,8 @@ const headerStyle = {
 
 export default function MainLayout() {
   const [isFixed, setIsFixed] = useState(false);
+  const location = useLocation();
+  const hideBreadcrumb = ['/login', '/'];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,6 +40,8 @@ export default function MainLayout() {
       </Header>
 
       <Content>
+        {/* 全局统一渲染面包屑（不在登录页等显示时可按需隐藏） */}
+        {!hideBreadcrumb.includes(location.pathname) && <CustomBreadcrumb />}
         <Outlet />
       </Content>
 

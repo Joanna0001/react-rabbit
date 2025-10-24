@@ -2,6 +2,7 @@ import { useGoodsListQuery } from '@/hooks/useHome';
 import type { GoodsResponse } from '@/types/category';
 import { Image, Flex } from 'antd';
 import { ProductCard } from '@/components/ProductCard';
+import { useNavigate } from 'react-router-dom';
 
 export function Product() {
   const { data: goodsList } = useGoodsListQuery();
@@ -15,6 +16,13 @@ export function Product() {
 }
 
 function ProductItem({ item }: { item: GoodsResponse }) {
+  const navigate = useNavigate();
+
+  const openProductDetail = (id: string, title: string) => {
+    // 从首页进入子分类，无法知道父级分类 id，这里仅传子类信息
+    navigate(`/category/sub/${id}`, { state: { categoryId: id, categoryName: title } });
+  };
+
   return (
     <div>
       <h3 className="text-[32px] ml-[8px] py-10">{item.name}</h3>
@@ -24,7 +32,7 @@ function ProductItem({ item }: { item: GoodsResponse }) {
         </div>
         <div className="ml-[20px] flex flex-wrap gap-[20px]">
           {item.goods.map(good => (
-            <ProductCard key={good.id} {...good} />
+            <ProductCard key={good.id} {...good} openProductDetail={() => openProductDetail(good.id, item.name)} />
           ))}
         </div>
       </Flex>

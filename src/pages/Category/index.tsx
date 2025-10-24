@@ -1,20 +1,26 @@
 import { Banner } from '@/components/Banner';
-import { Breadcrumb, Flex } from 'antd';
+import { Flex } from 'antd';
 import { useCategoryByIdQuery } from '@/hooks/useCategory';
-import { useBreadcrumbStore } from '@/store/useBreadcrumb';
 import { useParams } from 'react-router-dom';
 import { ProductCard } from '@/components/ProductCard';
 import { LazyImage } from '@/components/LazyImage';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export function Category() {
-  const { breadcrumb } = useBreadcrumbStore();
   const { id } = useParams<{ id: string }>();
   const { data: categoryData } = useCategoryByIdQuery(id!);
   const titleClassNames = 'text-[28px] h-25 leading-25 text-center text-[#666]';
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const openProductDetail = (subId: string, subName: string) => {
+    const state = (location.state || {}) as { categoryId?: string; categoryName?: string };
+    navigate(`/category/sub/${subId}`, { state: { ...state, subId, subName } });
+  };
 
   return (
     <div className="px-(--padding-x)">
-      <Breadcrumb separator=">" items={breadcrumb} style={{ padding: '25px 0' }} />
+      {/* 面包屑已在 MainLayout 统一渲染 */}
       <Banner distributionSite={2} />
 
       <div className="bg-white my-5 pb-5">
@@ -34,7 +40,7 @@ export function Category() {
           <h3 className={titleClassNames}>- {item.name} -</h3>
           <Flex wrap justify="space-around" style={{ padding: '0 40px 30px' }}>
             {item.goods?.map(goods => (
-              <ProductCard key={goods.id} {...goods} />
+              <ProductCard key={goods.id} {...goods} openProductDetail={() => openProductDetail(goods.id, item.name)} />
             ))}
           </Flex>
         </div>

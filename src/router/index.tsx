@@ -19,6 +19,10 @@ const router = createBrowserRouter([
         element: <Category />,
       },
       {
+        path: 'category/sub/:id',
+        element: <Category />,
+      },
+      {
         path: 'about',
         element: <About />,
       },

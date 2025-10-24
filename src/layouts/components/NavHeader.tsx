@@ -4,7 +4,6 @@ import { useUserStore } from '@/store/userStore';
 import { useNavigate } from 'react-router-dom';
 import { useCategoryQuery } from '@/hooks/useCategory';
 import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { useBreadcrumbStore } from '@/store/useBreadcrumb';
 import { useState } from 'react';
 
 const { Link, Text } = Typography;
@@ -71,24 +70,26 @@ export function NavHeader() {
 }
 
 export function MenuHeader() {
-  const { setBreadcrumb, resetBreadcrumb } = useBreadcrumbStore();
   const { data: categoryData, isLoading } = useCategoryQuery();
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState<string>();
 
   // 点击跳转到分类页面 并添加面包屑
   const openCategory = (name: string, id: string) => {
-    resetBreadcrumb();
-    navigate(`/category/${id}`);
-    setBreadcrumb([{ title: name, href: `/category/${id}` }]);
+    navigate(`/category/${id}`, { state: { categoryId: id, categoryName: name } });
     setActiveCategory(id);
+  };
+
+  const goHomePage = () => {
+    navigate('/');
+    setActiveCategory('');
   };
 
   return (
     <div className={styles.menuContainer}>
       <Flex align="center" justify="space-between">
         <div className={styles.logo}></div>
-        <Text className={styles.menuLink} onClick={() => navigate('/')}>
+        <Text className={styles.menuLink} onClick={goHomePage}>
           首页
         </Text>
 
