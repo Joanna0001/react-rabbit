@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { ProductCard } from '@/components/ProductCard';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { useNavigate } from 'react-router-dom';
 
 export function Sub() {
   const [activeTab, setActiveTab] = useState<string>('publishTime');
@@ -33,6 +34,7 @@ export function Sub() {
 }
 
 function ProductList({ sortField }: { sortField: string }) {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [pageSize] = useState(20);
 
@@ -54,7 +56,7 @@ function ProductList({ sortField }: { sortField: string }) {
     <div>
       <Flex wrap justify="space-around">
         {items.map(good => (
-          <ProductCard key={good.id} {...good} openProductDetail={() => {}} />
+          <ProductCard key={good.id} {...good} openProductDetail={() => navigate(`/detail/${good.id}`)} />
         ))}
       </Flex>
       <div ref={sentinelRef} />

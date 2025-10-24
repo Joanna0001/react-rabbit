@@ -1,3 +1,5 @@
+import type { CategoriesItem } from './category';
+
 export type Goods = {
   desc: string;
   id: string;
@@ -34,4 +36,72 @@ export type GoodsRequest = {
   page: number;
   pageSize: number;
   sortField: string;
+};
+
+export type OptionsProps = {
+  name: string;
+  value: string;
+};
+
+export type SkuProps = {
+  id: string;
+  inventory: number;
+  oldPrice: string;
+  picture: string;
+  price: string;
+  skuCode: string;
+  specs: OptionsProps[];
+};
+
+export type AddressProps = {
+  address: string;
+  addressTags: string;
+  cityCode: string;
+  contact: string;
+  countryCode: string;
+  fullLocation: string;
+  id: string;
+  isDefault: number;
+  postalCode: string;
+  provinceCode: string;
+  receiver: string;
+};
+
+export type GoodsInfoResponse = {
+  brands: BrandProps;
+  categories: CategoriesItem[];
+  collectCount: number;
+  commentCount: number;
+  desc: string;
+  details: Array<{
+    pictures: string[];
+    properties: OptionsProps[];
+  }>;
+  discount: number;
+  hotByDay: Goods[];
+  id: string;
+  inventory: number;
+  isCollect: boolean;
+  isPreSale: boolean;
+  mainPictures: string[];
+  mainVideos: string[];
+  name: string;
+  oldPrice: string;
+  price: string;
+  recomments: string;
+  salesCount: number;
+  similarProducts: Goods[];
+  skus: SkuProps[];
+  specs: Array<{
+    id: string;
+    name: string;
+    values: Array<{
+      desc: string;
+      name: string;
+      picture: string;
+    }>;
+  }>;
+  spuCode: string;
+  userAddresses: AddressProps[];
+  videoScale: number;
 };
