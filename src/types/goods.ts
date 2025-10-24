@@ -28,3 +28,10 @@ export type BrandProps = {
   desc: string;
   place: string;
 };
+
+export type GoodsRequest = {
+  categoryId: string;
+  page: number;
+  pageSize: number;
+  sortField: string;
+};

@@ -4,6 +4,7 @@ import About from '@/pages/About';
 import Login from '@/pages/Login';
 import Home from '@/pages/Home';
 import { Category } from '@/pages/Category';
+import { Sub } from '@/pages/Category/Sub';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'category/sub/:id',
-        element: <Category />,
+        element: <Sub />,
       },
       {
         path: 'about',

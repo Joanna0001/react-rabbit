@@ -17,10 +17,11 @@ export interface PageParams {
 
 // 分页响应数据
 export interface PageData<T> {
-  list: T[];
-  total: number;
+  items: T[];
+  counts: number;
   page: number;
   pageSize: number;
+  pages: number;
 }
 
 // 选项类型

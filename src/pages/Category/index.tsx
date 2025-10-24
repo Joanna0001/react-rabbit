@@ -13,9 +13,9 @@ export function Category() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const openProductDetail = (subId: string, subName: string) => {
+  const openProductDetail = (id: string, name: string) => {
     const state = (location.state || {}) as { categoryId?: string; categoryName?: string };
-    navigate(`/category/sub/${subId}`, { state: { ...state, subId, subName } });
+    navigate(`/category/sub/${id}`, { state: { ...state, categoryId: id, categoryName: name } });
   };
 
   return (
@@ -40,7 +40,7 @@ export function Category() {
           <h3 className={titleClassNames}>- {item.name} -</h3>
           <Flex wrap justify="space-around" style={{ padding: '0 40px 30px' }}>
             {item.goods?.map(goods => (
-              <ProductCard key={goods.id} {...goods} openProductDetail={() => openProductDetail(goods.id, item.name)} />
+              <ProductCard key={goods.id} {...goods} openProductDetail={() => openProductDetail(item.id, item.name)} />
             ))}
           </Flex>
         </div>
