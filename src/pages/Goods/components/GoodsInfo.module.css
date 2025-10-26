@@ -1,0 +1,7 @@
+.centeredInputNumber :global(.ant-input-number-input) {
+  text-align: center;
+}
+
+.centeredInputNumber :global(.ant-input-number-group-addon) {
+  cursor: pointer;
+}

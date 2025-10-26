@@ -27,6 +27,8 @@ export function LazyImage(props: ImageProps) {
   }, []);
 
   return (
-    <div ref={ref}>{load ? <Image {...props} /> : <div style={{ width: props.width, height: props.height }} />}</div>
+    <div ref={ref} style={{ lineHeight: 0 }}>
+      {load ? <Image {...props} /> : <div style={{ width: props.width, height: props.height }} />}
+    </div>
   );
 }

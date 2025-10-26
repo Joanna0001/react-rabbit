@@ -67,16 +67,18 @@ export type AddressProps = {
   receiver: string;
 };
 
+export type DetailsProps = {
+  pictures: string[];
+  properties: OptionsProps[];
+};
+
 export type GoodsInfoResponse = {
-  brands: BrandProps;
+  brand: BrandProps;
   categories: CategoriesItem[];
   collectCount: number;
   commentCount: number;
   desc: string;
-  details: Array<{
-    pictures: string[];
-    properties: OptionsProps[];
-  }>;
+  details: DetailsProps;
   discount: number;
   hotByDay: Goods[];
   id: string;
