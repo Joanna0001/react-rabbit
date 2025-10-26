@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCategoryQuery } from '@/hooks/useCategory';
 import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { useState } from 'react';
+import { useCart } from '@/hooks/useCart';
 
 const { Link, Text } = Typography;
 
@@ -71,6 +72,7 @@ export function NavHeader() {
 
 export function MenuHeader() {
   const { data: categoryData, isLoading } = useCategoryQuery();
+  const { isLogin } = useUserStore();
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState<string>();
 
@@ -84,6 +86,9 @@ export function MenuHeader() {
     navigate('/');
     setActiveCategory('');
   };
+
+  // 只有登录时才请求购物车数据
+  const { data: cartData } = useCart(isLogin);
 
   return (
     <div className={styles.menuContainer}>
@@ -109,7 +114,7 @@ export function MenuHeader() {
 
         <Flex>
           <Input placeholder="搜一搜" variant="underlined" prefix={<SearchOutlined style={{ fontSize: 20 }} />} />
-          <Badge count={10}>
+          <Badge count={cartData?.length || 0}>
             <ShoppingCartOutlined style={{ fontSize: 26 }} />
           </Badge>
         </Flex>

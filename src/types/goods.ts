@@ -50,7 +50,10 @@ export type SkuProps = {
   picture: string;
   price: string;
   skuCode: string;
-  specs: OptionsProps[];
+  specs: Array<{
+    name: string;
+    valueName: string;
+  }>;
 };
 
 export type AddressProps = {

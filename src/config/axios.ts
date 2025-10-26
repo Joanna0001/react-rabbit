@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosRequestConfig } from 'axios';
+import { useUserStore } from '@/store/userStore';
 
 export interface ApiResponse<T = unknown> {
   code: string;
@@ -17,7 +18,8 @@ const axiosInstance: AxiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('token');
+    // 从 store 中获取 token
+    const token = useUserStore.getState().token;
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -41,7 +43,8 @@ axiosInstance.interceptors.response.use(
       const { status } = error.response;
       switch (status) {
         case 401:
-          localStorage.removeItem('token');
+          // 清除用户登录状态
+          useUserStore.getState().logout();
           window.location.href = '/login';
           break;
         // ... other error handling
