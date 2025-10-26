@@ -29,7 +29,7 @@ export function Category() {
           {categoryData?.children.map(item => (
             <div key={item.id} className="px-8 cursor-pointer hover:text-(--primary-color)">
               <LazyImage src={item.picture} width={100} height={100} alt={item.name} preview={false} />
-              <div className="text-center text-base color-[#333] leading-8">{item.name}</div>
+              <div className="text-center text-base leading-8">{item.name}</div>
             </div>
           ))}
         </Flex>

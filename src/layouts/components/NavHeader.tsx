@@ -1,11 +1,13 @@
-import { Space, Divider, Typography, Modal, Flex, Spin, Input, Badge } from 'antd';
+import { Space, Divider, Typography, Modal, Flex, Spin, Input, Badge, Dropdown, Image, Button } from 'antd';
+import type { MenuProps } from 'antd';
 import styles from './NavHeader.module.css';
 import { useUserStore } from '@/store/userStore';
 import { useNavigate } from 'react-router-dom';
 import { useCategoryQuery } from '@/hooks/useCategory';
-import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { SearchOutlined, ShoppingCartOutlined, DeleteFilled } from '@ant-design/icons';
 import { useState } from 'react';
 import { useCart } from '@/hooks/useCart';
+import React from 'react';
 
 const { Link, Text } = Typography;
 
@@ -90,6 +92,34 @@ export function MenuHeader() {
   // 只有登录时才请求购物车数据
   const { data: cartData } = useCart(isLogin);
 
+  // 购物车列表展示
+  const cartList: MenuProps['items'] = cartData?.map(item => ({
+    key: item.skuId,
+    label: (
+      <Flex justify="space-between" gap={20} className={styles.cartItem}>
+        <Image src={item.picture} alt={item.name} width={80} height={80} preview={false} />
+        <Flex vertical gap={4}>
+          <div className="text-base line-clamp-2 mt-2">{item.name}</div>
+          <div className="truncate text-[#999]">{item.attrsText}</div>
+        </Flex>
+        <Flex vertical gap={4} align="center">
+          <div className="text-base text-(--price-color) mt-3.5">￥{item.price}</div>
+          <div className="text-base text-[#999]">x{item.count}</div>
+        </Flex>
+        <Flex align="center" className={styles.deleteIcon}>
+          <DeleteFilled
+            style={{ fontSize: 16, color: 'var(--price-color)' }}
+            onClick={() => handleDeleteCart(item.skuId)}
+          />
+        </Flex>
+      </Flex>
+    ),
+  }));
+
+  const handleDeleteCart = (skuId: string) => {
+    console.log(skuId);
+  };
+
   return (
     <div className={styles.menuContainer}>
       <Flex align="center" justify="space-between">
@@ -115,7 +145,26 @@ export function MenuHeader() {
         <Flex>
           <Input placeholder="搜一搜" variant="underlined" prefix={<SearchOutlined style={{ fontSize: 20 }} />} />
           <Badge count={cartData?.length || 0}>
-            <ShoppingCartOutlined style={{ fontSize: 26 }} />
+            <Dropdown
+              menu={{ items: cartList }}
+              placement="bottomRight"
+              arrow
+              trigger={['click']}
+              popupRender={menu => (
+                <div className="bg-white">
+                  {React.cloneElement(
+                    menu as React.ReactElement<{
+                      style: React.CSSProperties;
+                    }>,
+                  )}
+                  <Flex style={{ padding: 8 }}>
+                    <Button type="primary">Click me!</Button>
+                  </Flex>
+                </div>
+              )}
+            >
+              <ShoppingCartOutlined style={{ fontSize: 26, cursor: 'pointer' }} />
+            </Dropdown>
           </Badge>
         </Flex>
       </Flex>

@@ -20,6 +20,7 @@ createRoot(document.getElementById('root')!).render(
             colorSuccess: '#1dc779',
             colorWarning: '#ffb302',
             colorError: '#cf4444',
+            colorText: '#333',
             fontFamily:
               "'Microsoft Yahei', 'PingFang SC', 'Avenir', 'Segoe UI', 'Hiragino Sans GB', 'STHeiti', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif",
           },

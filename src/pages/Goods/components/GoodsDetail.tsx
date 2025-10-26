@@ -7,7 +7,7 @@ export function GoodsDetail({ hotByDay, details }: { hotByDay: Goods[]; details:
   return (
     <Flex justify="space-between">
       <div className="w-235 bg-white">
-        <h3 className="text-lg border-b border-[#f5f5f5] h-18 leading-18 pl-12 text-[#333]">商品详情</h3>
+        <h3 className="text-lg border-b border-[#f5f5f5] h-18 leading-18 pl-12">商品详情</h3>
         <div className="p-10">
           <Flex wrap style={{ marginBottom: 25 }}>
             {details.properties.map(property => (

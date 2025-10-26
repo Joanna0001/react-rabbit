@@ -127,7 +127,7 @@ export function GoodsInfo({ data }: { data: GoodsInfoResponse }) {
       </div>
 
       <div className="py-7.5 pr-7.5">
-        <h3 className="text-[22px] text-[#333]">{data?.name}</h3>
+        <h3 className="text-[22px]">{data?.name}</h3>
         <p className="mt-2.5 text-sm text-[#999]">{data?.desc}</p>
         <p className="mt-2.5 text-[22px] text-(--price-color)">
           <span className="text-sm">￥</span>
