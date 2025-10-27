@@ -57,3 +57,11 @@ body {
   font-size: 16px;
   text-align: center;
 }
+
+.bgHeaderTable .ant-table :where(.ant-table-thead) > tr > th {
+  background-color: #f5f5f5;
+  font-weight: 400;
+  color: #666;
+  font-size: 16px;
+  text-align: center;
+}

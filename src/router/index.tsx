@@ -6,6 +6,7 @@ import { Category } from '@/pages/Category';
 import { Sub } from '@/pages/Category/Sub';
 import { Goods } from '@/pages/Goods';
 import { Cart } from '@/pages/Cart';
+import { Checkout } from '@/pages/Checkout';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: 'cart',
         element: <Cart />,
+      },
+      {
+        path: 'checkout',
+        element: <Checkout />,
       },
     ],
   },

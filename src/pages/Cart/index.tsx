@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCart } from '@/hooks/useCart';
 import { deleteCart } from '@/api/cart';
 import type { Cart } from '@/types/cart';
+import { useNavigate } from 'react-router-dom';
 
 const { Text } = Typography;
 
@@ -11,6 +12,7 @@ export function Cart() {
   const queryClient = useQueryClient();
   const { data: cartData } = useCart();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const defaultSelected = cartData?.filter(item => item.selected).map(item => item.skuId) || [];
@@ -117,7 +119,7 @@ export function Cart() {
         <div className="text-[#666]">
           共{total}件商品, 已选择 {totalCount} 件，商品合计{totalAmount.toFixed(2)}
         </div>
-        <Button type="primary" size="large" disabled={selectedItems.length === 0}>
+        <Button type="primary" size="large" disabled={selectedItems.length === 0} onClick={() => navigate('/checkout')}>
           下单结算
         </Button>
       </Flex>

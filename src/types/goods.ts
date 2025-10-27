@@ -110,3 +110,16 @@ export type GoodsInfoResponse = {
   userAddresses: AddressProps[];
   videoScale: number;
 };
+
+export type PreGoods = {
+  id: string;
+  name: string;
+  picture: string;
+  count: number;
+  skuId: string;
+  attrsText: string;
+  price: string;
+  payPrice: string;
+  totalPrice: string;
+  totalPayPrice: string;
+};
