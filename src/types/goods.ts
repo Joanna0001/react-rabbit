@@ -119,7 +119,7 @@ export type PreGoods = {
   skuId: string;
   attrsText: string;
   price: string;
-  payPrice: string;
-  totalPrice: string;
-  totalPayPrice: string;
+  payPrice: string; // 商品实付单价
+  totalPrice: string; // 商品小计总价
+  totalPayPrice: string; // 商品实付价格小计
 };

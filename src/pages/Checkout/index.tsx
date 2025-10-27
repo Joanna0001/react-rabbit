@@ -1,18 +1,29 @@
-import { Button, Flex, Table, Space, Image, Typography, type TableProps, Divider, Modal } from 'antd';
+import { Button, Flex, Table, Space, Image, Typography, type TableProps, Divider, Modal, message } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
-import { generateOrder } from '@/api/order';
+import { generateOrder, submitOrder } from '@/api/order';
 import type { AddressProps, PreGoods } from '@/types/goods';
-import type { GenerateOrderResponse } from '@/types/order';
+import type { GenerateOrderResponse, SubmitOrderPayload } from '@/types/order';
+import { useNavigate } from 'react-router-dom';
 
 const { Text } = Typography;
 
 export function Checkout() {
+  const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
   const titleClassName = 'text-base font-normal leading-17 border-b border-[#f5f5f5] mb-5';
   const addressCardClassName = 'p-5 leading-8 border border-[#f5f5f5] mb-2 mr-2 text-[#606266] cursor-pointer';
   const [currentAddress, setCurrentAddress] = useState<AddressProps | null>(null);
   const [orderInfo, setOrderInfo] = useState<GenerateOrderResponse | null>(null);
   const [selectedDelivery, setSelectedDelivery] = useState<AddressProps | null>(null);
   const [showAddressList, setShowAddressList] = useState(false);
+  const [submitParams, setSubmitParams] = useState<SubmitOrderPayload>({
+    payType: 1,
+    payChannel: 1,
+    buyerMessage: '',
+    goods: [],
+    addressId: '',
+    deliveryTimeType: 1,
+  });
 
   const fetchData = useCallback(async () => {
     const res = await generateOrder();
@@ -62,9 +73,15 @@ export function Checkout() {
     },
   ];
 
-  const RadioCard = ({ label }: { label: string }) => {
+  const RadioCard = ({ label, value, labelKey }: { label: string; value: number; labelKey: string }) => {
     return (
-      <div className="w-55 h-12 leading-12 text-[#666] border border-[#e4e4e4] text-center cursor-pointer">{label}</div>
+      <div
+        className={`w-55 h-12 leading-12 text-[#666] border border-[#e4e4e4] text-center cursor-pointer
+          ${submitParams[labelKey as keyof SubmitOrderPayload] === value ? 'border-(--primary-color)!' : ''}`}
+        onClick={() => setSubmitParams(prev => ({ ...prev, [labelKey]: value }))}
+      >
+        {label}
+      </div>
     );
   };
 
@@ -74,8 +91,29 @@ export function Checkout() {
     setCurrentAddress(selectedDelivery);
   };
 
+  const handleSubmitOrder = async () => {
+    if (!selectedDelivery) return messageApi.warning('请选择收货地址');
+    if (!submitParams.deliveryTimeType) return messageApi.warning('请选择送货时间');
+    if (!submitParams.payType) return messageApi.warning('请选择支付方式');
+    if (!submitParams.goods.length) return messageApi.warning('请选择商品');
+    if (!submitParams.addressId) return messageApi.warning('请选择收货地址');
+    const params = {
+      ...submitParams,
+      addressId: selectedDelivery?.id,
+      goods:
+        orderInfo?.goods.map(item => ({
+          skuId: item.skuId,
+          count: item.count,
+        })) ?? [],
+    };
+    const res = await submitOrder(params);
+    messageApi.success('提交订单成功');
+    navigate(`/order/${res.id}`);
+  };
+
   return (
     <div className="mx-(--padding-x) mb-5 px-5 bg-white">
+      {contextHolder}
       <h3 className={titleClassName}>收货地址</h3>
 
       <Flex justify="space-between" align="center" className="border border-[#f5f5f5]">
@@ -111,15 +149,15 @@ export function Checkout() {
 
       <h3 className={titleClassName}>配送时间</h3>
       <Space size={20}>
-        <RadioCard label="不限送货时间：周一至周日" />
-        <RadioCard label="工作日送货：周一至周五" />
-        <RadioCard label="双休日、假日送货：周六至周日" />
+        <RadioCard label="不限送货时间：周一至周日" value={1} labelKey="deliveryTimeType" />
+        <RadioCard label="工作日送货：周一至周五" value={2} labelKey="deliveryTimeType" />
+        <RadioCard label="双休日、假日送货：周六至周日" value={3} labelKey="deliveryTimeType" />
       </Space>
 
       <h3 className={titleClassName}>支付方式</h3>
       <Space size={20}>
-        <RadioCard label="在线支付" />
-        <RadioCard label="货到付款" />
+        <RadioCard label="在线支付" value={1} labelKey="payType" />
+        <RadioCard label="货到付款" value={2} labelKey="payType" />
         <div className="text-[#999]">货到付款需付5元手续费</div>
       </Space>
 
@@ -146,7 +184,7 @@ export function Checkout() {
       </Flex>
       <Divider />
       <div className="p-14 text-right">
-        <Button size="large" type="primary">
+        <Button size="large" type="primary" onClick={handleSubmitOrder}>
           提交订单
         </Button>
       </div>
