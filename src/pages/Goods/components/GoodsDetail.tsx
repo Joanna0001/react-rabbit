@@ -27,13 +27,13 @@ export function GoodsDetail({ hotByDay, details }: { hotByDay: Goods[]; details:
       </div>
 
       <div className="w-70">
-        <h3 className="bg-[#e26237] h-18 leading-18 text-[#fff] pl-6 text-lg">24小时热榜</h3>
+        <h3 className="bg-[#e26237] h-18 leading-18 text-white pl-6 text-lg">24小时热榜</h3>
         <div className="bg-white">
           {hotByDay.map(item => (
             <ProductCard key={item.id} {...item} width="w-70" isShadow={false} openProductDetail={() => {}} />
           ))}
         </div>
-        <h3 className="bg-[#e26237] h-18 leading-18 text-[#fff] pl-6 text-lg mt-5">周热榜</h3>
+        <h3 className="bg-[#e26237] h-18 leading-18 text-white pl-6 text-lg mt-5">周热榜</h3>
         <div className="bg-white">
           {hotByDay.map(item => (
             <ProductCard key={item.id} {...item} width="w-70" isShadow={false} openProductDetail={() => {}} />

@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import styles from './GoodsInfo.module.css';
 import type { GoodsInfoResponse, SkuProps } from '@/types/goods';
 import { addCart } from '@/api/cart';
+import { useQueryClient } from '@tanstack/react-query';
 
 const { Text } = Typography;
 
 export function GoodsInfo({ data }: { data: GoodsInfoResponse }) {
+  const queryClient = useQueryClient();
   const [messageApi, contextHolder] = message.useMessage();
   const [mainPicture, setMainPicture] = useState<string>('');
   const [count, setCount] = useState<number>(1);
@@ -67,6 +69,7 @@ export function GoodsInfo({ data }: { data: GoodsInfoResponse }) {
     if (!currentSku?.id) return;
     await addCart(currentSku.id, count);
     messageApi.success('加入购物车成功');
+    queryClient.invalidateQueries({ queryKey: ['cart'] });
   };
 
   return (

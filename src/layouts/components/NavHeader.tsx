@@ -1,5 +1,4 @@
-import { Space, Divider, Typography, Modal, Flex, Spin, Input, Badge, Dropdown, Image, Button } from 'antd';
-import type { MenuProps } from 'antd';
+import { Space, Divider, Typography, Modal, Flex, Spin, Input, Badge, Popover, Image, Button, message } from 'antd';
 import styles from './NavHeader.module.css';
 import { useUserStore } from '@/store/userStore';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +6,9 @@ import { useCategoryQuery } from '@/hooks/useCategory';
 import { SearchOutlined, ShoppingCartOutlined, DeleteFilled } from '@ant-design/icons';
 import { useState } from 'react';
 import { useCart } from '@/hooks/useCart';
-import React from 'react';
+import { deleteCart } from '@/api/cart';
+import type { Cart } from '@/types/cart';
+import { useQueryClient } from '@tanstack/react-query';
 
 const { Link, Text } = Typography;
 
@@ -77,6 +78,8 @@ export function MenuHeader() {
   const { isLogin } = useUserStore();
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState<string>();
+  const [messageApi, messageContextHolder] = message.useMessage();
+  const queryClient = useQueryClient();
 
   // 点击跳转到分类页面 并添加面包屑
   const openCategory = (name: string, id: string) => {
@@ -93,35 +96,65 @@ export function MenuHeader() {
   const { data: cartData } = useCart(isLogin);
 
   // 购物车列表展示
-  const cartList: MenuProps['items'] = cartData?.map(item => ({
-    key: item.skuId,
-    label: (
-      <Flex justify="space-between" gap={20} className={styles.cartItem}>
-        <Image src={item.picture} alt={item.name} width={80} height={80} preview={false} />
-        <Flex vertical gap={4}>
-          <div className="text-base line-clamp-2 mt-2">{item.name}</div>
-          <div className="truncate text-[#999]">{item.attrsText}</div>
+  const CartPopoverContent = () => {
+    return (
+      <div>
+        {cartData?.map(item => (
+          <Flex
+            key={item.skuId}
+            justify="space-between"
+            gap={20}
+            className={styles.cartItem}
+            style={{ padding: '10px 15px' }}
+          >
+            <Image src={item.picture} alt={item.name} width={80} height={80} preview={false} />
+            <Flex vertical gap={4} style={{ width: 220 }}>
+              <div className="text-base line-clamp-2 mt-2">{item.name}</div>
+              <div className="truncate text-[#999]">{item.attrsText}</div>
+            </Flex>
+            <Flex vertical gap={4} align="center">
+              <div className="text-base text-(--price-color) mt-3.5">￥{item.price}</div>
+              <div className="text-base text-[#999]">x{item.count}</div>
+            </Flex>
+            <Flex align="center" className={styles.deleteIcon}>
+              <DeleteFilled
+                style={{ fontSize: 16, color: 'var(--price-color)' }}
+                onClick={() => handleDeleteCart(item.skuId)}
+              />
+            </Flex>
+          </Flex>
+        ))}
+        <Flex
+          justify="space-between"
+          align="center"
+          gap={20}
+          style={{ backgroundColor: '#f8f8f8', height: 70, padding: '10px 15px' }}
+        >
+          <div>
+            <div className="text-sm text-[#999]">
+              共{cartData?.reduce((acc: number, item: Cart) => acc + item.count, 0)}件商品
+            </div>
+            <div className="text-lg text-(--price-color)">
+              ￥{cartData?.reduce((acc: number, item: Cart) => acc + Number(item.price) * item.count, 0)}
+            </div>
+          </div>
+          <Button type="primary" size="large" onClick={() => navigate('/cart')}>
+            去购物车结算
+          </Button>
         </Flex>
-        <Flex vertical gap={4} align="center">
-          <div className="text-base text-(--price-color) mt-3.5">￥{item.price}</div>
-          <div className="text-base text-[#999]">x{item.count}</div>
-        </Flex>
-        <Flex align="center" className={styles.deleteIcon}>
-          <DeleteFilled
-            style={{ fontSize: 16, color: 'var(--price-color)' }}
-            onClick={() => handleDeleteCart(item.skuId)}
-          />
-        </Flex>
-      </Flex>
-    ),
-  }));
+      </div>
+    );
+  };
 
-  const handleDeleteCart = (skuId: string) => {
-    console.log(skuId);
+  const handleDeleteCart = async (skuId: string) => {
+    await deleteCart([skuId]);
+    messageApi.success('删除成功');
+    queryClient.invalidateQueries({ queryKey: ['cart'] });
   };
 
   return (
     <div className={styles.menuContainer}>
+      {messageContextHolder}
       <Flex align="center" justify="space-between">
         <div className={styles.logo}></div>
         <Text className={styles.menuLink} onClick={goHomePage}>
@@ -145,26 +178,9 @@ export function MenuHeader() {
         <Flex>
           <Input placeholder="搜一搜" variant="underlined" prefix={<SearchOutlined style={{ fontSize: 20 }} />} />
           <Badge count={cartData?.length || 0}>
-            <Dropdown
-              menu={{ items: cartList }}
-              placement="bottomRight"
-              arrow
-              trigger={['click']}
-              popupRender={menu => (
-                <div className="bg-white">
-                  {React.cloneElement(
-                    menu as React.ReactElement<{
-                      style: React.CSSProperties;
-                    }>,
-                  )}
-                  <Flex style={{ padding: 8 }}>
-                    <Button type="primary">Click me!</Button>
-                  </Flex>
-                </div>
-              )}
-            >
+            <Popover placement="bottomRight" arrow styles={{ body: { padding: 0 } }} content={<CartPopoverContent />}>
               <ShoppingCartOutlined style={{ fontSize: 26, cursor: 'pointer' }} />
-            </Dropdown>
+            </Popover>
           </Badge>
         </Flex>
       </Flex>

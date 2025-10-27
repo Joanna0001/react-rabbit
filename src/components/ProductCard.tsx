@@ -24,8 +24,8 @@ export function ProductCard({
   return (
     <div className={cardClassNames} onClick={openProductDetail}>
       <LazyImage src={picture} width="100%" alt={name} preview={false} />
-      <div className="text-center text-base mt-2.5 ellipsis">{name}</div>
-      <div className="text-center text-sm text-[#999]  my-2.5 ellipsis">{desc}</div>
+      <div className="text-center text-base mt-2.5 truncate">{name}</div>
+      <div className="text-center text-sm text-[#999]  my-2.5 truncate">{desc}</div>
       <div className="text-center text-xl text-(--price-color)">￥{price}</div>
     </div>
   );

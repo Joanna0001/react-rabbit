@@ -51,8 +51,8 @@ export function HomePanel() {
             cover={<LazyImage width={300} height={300} src={item.picture} preview={false} />}
           >
             <Meta
-              title={<div className="text-[22px] text-center ellipsis w-[246px]">{item.name}</div>}
-              description={<div className="text-[22px] text-[var(--price-color)] text-center">￥{item.price}</div>}
+              title={<div className="text-[22px] text-center truncate w-[246px]">{item.name}</div>}
+              description={<div className="text-[22px] text-(--price-color) text-center">￥{item.price}</div>}
             />
           </Card>
         ))}
